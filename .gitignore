@@ -12,6 +12,7 @@ vendor/
 .vscode/
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
 
 # Ignore logs and temporary files
 *.log
