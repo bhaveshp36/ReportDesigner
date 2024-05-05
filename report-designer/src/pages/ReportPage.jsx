@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme, Row, Col } from "antd";
 const { Header, Content, Footer } = Layout;
+
+import MiddleSection from "./MiddleSection";
 
 const items = new Array(3).fill(null).map((_, index) => ({
   key: String(index + 1),
@@ -9,12 +11,12 @@ const items = new Array(3).fill(null).map((_, index) => ({
 }));
 
 // eslint-disable-next-line react/prop-types
-const ReportPage = ({children}) => {
+const ReportPage = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-    <Layout>
+    <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
           position: "sticky",
@@ -25,34 +27,37 @@ const ReportPage = ({children}) => {
           alignItems: "center",
         }}
       >
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          style={{
-            flex: 1,
-            minWidth: 0,
-          }}
-        />
+        Header
       </Header>
-      <Content
-        style={{
-          flex: 1,
-          padding: "48px",
-          display: "flex",
-          height: "100vh",
-        }}
-      >
-        {children}
+      <Content>
+        <Row>
+          <Col
+            id="leftPanel"
+            span={6}
+            style={{ background: "#eee", height: "100vh" }}
+          >
+            {/* Left section (25%) */}
+          </Col>
+          <Col
+            id="middlePanel"
+            span={6}
+            style={{ background: "#ddd", height: "100vh" }}
+          >
+            <MiddleSection />
+            {/* Middle section (25%) */}
+          </Col>
+          <Col
+            id="rightPanel"
+            span={12}
+            style={{ background: "#ccc", height: "100vh" }}
+          >
+            {/* Right section (50%) */}
+            {children}
+          </Col>
+        </Row>
       </Content>
-      <Footer
-        style={{
-          textAlign: "center",
-        }}
-      ></Footer>
     </Layout>
   );
 };
+
 export default ReportPage;

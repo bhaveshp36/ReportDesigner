@@ -11,7 +11,6 @@ import PlayerStats from "./components/PlayerStats";
 import RecentMatches from "./components/RecentMatches";
 import Records from "./components/Records";
 import TotalStats from "./components/TotalStats";
-
 import WLStats from "./components/WLStats";
 
 import Player from "./pages/Player";
