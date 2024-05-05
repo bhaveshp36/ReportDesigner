@@ -17,11 +17,6 @@ function App() {
       try {
         const response = await axios.get(`http://localhost:3000/players`); // Replace with your API endpoint
         console.log(response.data);
-        // const openApidata = await axios.get(
-        //   `https://api.opendota.com/api/players/${response.data.steamid}`
-        // );
-        // console.log(openApidata.data);
-        // response.data.avatar = openApidata.data.profile.avatarfull;
         setPlayer(response.data);
       } catch (error) {
         console.error("Failed to fetch player:", error);

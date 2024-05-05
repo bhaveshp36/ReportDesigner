@@ -9,6 +9,7 @@ import {
   Legend,
 } from "recharts";
 import axios from "axios";
+import { Card } from "antd";
 
 class Histograms extends React.Component {
   constructor(props) {
@@ -35,15 +36,30 @@ class Histograms extends React.Component {
     const { data } = this.state;
 
     return (
-      <BarChart width={800} height={400} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="x" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="games" fill="#8884d8" />
-        <Bar dataKey="win" fill="#82ca9d" />
-      </BarChart>
+      <Card title="Actions per minute">
+        <BarChart width={800} height={400} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis
+            dataKey="x"
+            label={{
+              value: "X Axis Title",
+              position: "outsideBottom",
+              offset: -10,
+            }}
+          />
+          <YAxis
+            label={{
+              value: "Y Axis Title",
+              angle: -90,
+              position: "outsideLeft",
+            }}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="games" fill="#8884d8" />
+          <Bar dataKey="win" fill="#82ca9d" />
+        </BarChart>
+      </Card>
     );
   }
 }

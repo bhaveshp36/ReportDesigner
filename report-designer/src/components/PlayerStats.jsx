@@ -1,21 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Spin } from "antd";
-const { Meta } = Card;
+import { Card, Spin, Descriptions, Row, Col } from "antd";
 
 const PlayerStats = () => {
   const [playerData, setPlayerData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const steamid = "252253616";
+    const steamid = "322669462";
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `https://api.opendota.com/api/players/${steamid}`
         );
         setPlayerData(response.data);
+        console.log("Player data:", response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching player data:", error);
@@ -25,43 +25,98 @@ const PlayerStats = () => {
     fetchData();
   }, []);
 
+  const items = [
+    {
+      key: "account_id",
+      label: "Account ID",
+      children: playerData?.profile?.account_id || "N/A",
+    },
+    {
+      key: "personaname",
+      label: "Persona Name",
+      children: playerData?.profile?.personaname || "N/A",
+    },
+    {
+      key: "name",
+      label: "Name",
+      children: playerData?.profile?.name || "N/A",
+    },
+    {
+      key: "plus",
+      label: "Plus",
+      children: playerData?.profile?.plus ? "Yes" : "No",
+    },
+    {
+      key: "cheese",
+      label: "Cheese",
+      children: playerData?.profile?.cheese || 0,
+    },
+    {
+      key: "steamid",
+      label: "Steam ID",
+      children: playerData?.profile?.steamid || "N/A",
+    },
+    {
+      key: "profileurl",
+      label: "Profile URL",
+      children: playerData?.profile?.profileurl || "N/A",
+    },
+    {
+      key: "last_login",
+      label: "Last Login",
+      children: playerData?.profile?.last_login || "N/A",
+    },
+    {
+      key: "loccountrycode",
+      label: "Country Code",
+      children: playerData?.profile?.loccountrycode || "N/A",
+    },
+    {
+      key: "status",
+      label: "Status",
+      children: playerData?.profile?.status || "N/A",
+    },
+    {
+      key: "fh_unavailable",
+      label: "FH Unavailable",
+      children: playerData?.profile?.fh_unavailable ? "Yes" : "No",
+    },
+    {
+      key: "is_contributor",
+      label: "Is Contributor",
+      children: playerData?.profile?.is_contributor ? "Yes" : "No",
+    },
+    {
+      key: "is_subscriber",
+      label: "Is Subscriber",
+      children: playerData?.profile?.is_subscriber ? "Yes" : "No",
+    },
+    {
+      key: "rank_tier",
+      label: "Rank Tier",
+      children: playerData?.rank_tier || "N/A",
+    },
+    {
+      key: "leaderboard_rank",
+      label: "Leaderboard Rank",
+      children: playerData?.leaderboard_rank || "N/A",
+    },
+  ];
+
   return (
-    <div>
-      <Card title="Player Stats">
+    <div style={{ display: "flex" }}>
+      <Card title="Player Stats" style={{ flex: 1, width: "100%" }}>
         {loading ? (
           <Spin size="large" />
         ) : (
-          <>
-            <Card
-              hoverable
-              style={{
-                width: 240,
-              }}
-              cover={
-                <img
-                  src={playerData?.profile?.avatarfull}
-                  alt="Player Avatar"
-                />
-              }
-            >
-              <Meta
-                title={playerData?.profile?.personaname}
-                description={playerData?.profile?.steamid}
-              />
-              <p>Player Name: {playerData?.profile?.personaname}</p>
-              <p>MMR: {playerData?.rank_tier}</p>
-              <p>Account ID: {playerData?.profile?.account_id}</p>
-              <p>Steam ID: {playerData?.profile?.steamid}</p>
-              <p>Country: {playerData?.profile?.loccountrycode}</p>
-              <p>Last Login: {playerData?.profile?.last_login}</p>
-              <p>
-                Profile URL:{" "}
-                <a href={playerData?.profile?.profileurl}>
-                  {playerData?.profile?.profileurl}
-                </a>
-              </p>
-            </Card>
-          </>
+          <Row>
+            <Col span={8}>
+              <img src={playerData.profile.avatarfull} alt="Avatar" />
+            </Col>
+            <Col span={16}>
+              <Descriptions title="User Info" items={items} />
+            </Col>
+          </Row>
         )}
       </Card>
     </div>
