@@ -64,6 +64,7 @@ const initialData = [
     address: "Sidney No. 1 Lake Park",
   },
 ];
+
 const Row = (props) => {
   const {
     attributes,

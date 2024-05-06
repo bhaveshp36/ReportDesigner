@@ -8,15 +8,15 @@ app.use(cors());
 //For body Parsing//
 app.use(express.json());
 
-const playerRoutes = require("./playerRoutes");
+const playerRoutes = require("./player");
 app.use(playerRoutes);
+
+const templateRouter = require("./template"); // adjust the path according to your project structure
+app.use(templateRouter);
 
 // Import Swagger route
 const swaggerRoute = require("./swagger");
 app.use("/docs", swaggerRoute);
-
-const scrapeRoutes = require("./scrapper");
-app.use(scrapeRoutes);
 
 // Default Route //
 app.get("/", (req, res) => {
