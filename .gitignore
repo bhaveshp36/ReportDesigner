@@ -1,3 +1,6 @@
+
+*.env*
+
 # Ignore build output
 build/
 dist/
