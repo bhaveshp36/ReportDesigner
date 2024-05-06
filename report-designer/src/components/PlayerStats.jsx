@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Spin, Descriptions, Row, Col } from "antd";
 
-const PlayerStats = () => {
+// eslint-disable-next-line react/prop-types
+const PlayerStats = ({ steamid }) => {
   const [playerData, setPlayerData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const steamid = "322669462";
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -23,7 +23,7 @@ const PlayerStats = () => {
     };
 
     fetchData();
-  }, []);
+  }, [steamid]);
 
   const items = [
     {

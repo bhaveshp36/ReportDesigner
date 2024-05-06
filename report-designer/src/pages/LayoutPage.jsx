@@ -3,10 +3,9 @@ import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 const { Header, Content, Footer } = Layout;
 
-const items = new Array(3).fill(null).map((_, index) => ({
-  key: String(index + 1),
-  label: `nav ${index + 1}`,
-}));
+import Player from "./Player";
+
+
 const LayoutPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -22,18 +21,7 @@ const LayoutPage = () => {
           display: "flex",
           alignItems: "center",
         }}
-      >
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          style={{
-            flex: 1,
-            minWidth: 0,
-          }}
-        />
+      >   
       </Header>
       <Content
         style={{
@@ -42,7 +30,9 @@ const LayoutPage = () => {
           display: "flex",
           height: "100vh",
         }}
-      ></Content>
+      >
+        <Player />
+      </Content>
       <Footer
         style={{
           textAlign: "center",

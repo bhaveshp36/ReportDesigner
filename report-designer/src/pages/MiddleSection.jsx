@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useContext, useMemo } from "react";
 import { HolderOutlined } from "@ant-design/icons";
@@ -12,7 +13,17 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { Button, Table } from "antd";
 
+import AllCounts from "../components/AllCounts";
+import Histograms from "../components/Histograms";
+import Peers from "../components/Peers";
+import PlayerStats from "../components/PlayerStats";
+import RecentMatches from "../components/RecentMatches";
+import Records from "../components/Records";
+import TotalStats from "../components/TotalStats";
+import WLStats from "../components/WLStats";
+
 const RowContext = React.createContext({});
+
 const DragHandle = () => {
   const { setActivatorNodeRef, listeners } = useContext(RowContext);
   return (
@@ -28,42 +39,6 @@ const DragHandle = () => {
     />
   );
 };
-const columns = [
-  {
-    key: "sort",
-    align: "center",
-    width: 80,
-    render: () => <DragHandle />,
-  },
-  {
-    title: "Key",
-    dataIndex: "key",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-];
-const initialData = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "Long text Long",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-];
 
 const Row = (props) => {
   const {
@@ -101,28 +76,86 @@ const Row = (props) => {
     </RowContext.Provider>
   );
 };
-const App = () => {
-  const [dataSource, setDataSource] = React.useState(initialData);
+
+export const MiddleSection = ({ components, setComponents }) => {
+
+  const handleAdd = (newComponent) => {
+    setComponents((prevState) => {
+      // Check if the component already exists in the state
+      const exists = prevState.some((comp) => comp.key === newComponent.key);
+
+      // If the component exists, return the current state
+      if (exists) {
+        return prevState;
+      }
+
+      // If the component does not exist, return a new state with the new component added
+      return [...prevState, newComponent];
+    });
+  };
+
   const onDragEnd = ({ active, over }) => {
     if (active.id !== over?.id) {
-      setDataSource((prevState) => {
+      setComponents((prevState) => {
         const activeIndex = prevState.findIndex(
           (record) => record.key === active?.id
         );
         const overIndex = prevState.findIndex(
           (record) => record.key === over?.id
         );
-        return arrayMove(prevState, activeIndex, overIndex);
+        const newArray = arrayMove(prevState, activeIndex, overIndex);
+
+        // Update components prop to reflect the new order of items
+        setComponents(newArray.map((item) => item.component));
+
+        return newArray;
       });
     }
   };
+
+  const columns = [
+    {
+      key: "sort",
+      align: "center",
+      width: 80,
+      render: () => <DragHandle />,
+    },
+    {
+      title: "Key",
+      dataIndex: "key",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_, record) => (
+        <Button danger type="link" onClick={() => handleRemove(record.key)}>
+          Remove
+        </Button>
+      ),
+    },
+  ];
+
+  const handleRemove = (key) => {
+    setComponents((prevState) =>
+      prevState.filter((record) => record.key !== key)
+    );
+  };
+
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
       <SortableContext
-        items={dataSource.map((i) => i.key)}
+        items={components.map((i) => i.key)}
         strategy={verticalListSortingStrategy}
       >
         <Table
+          pagination={false}
+          size="small"
+          showHeader={false}
+          style={{ margin: 10, padding: 0 }}
           rowKey="key"
           components={{
             body: {
@@ -130,10 +163,11 @@ const App = () => {
             },
           }}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={components}
         />
       </SortableContext>
     </DndContext>
   );
 };
-export default App;
+
+export default MiddleSection;

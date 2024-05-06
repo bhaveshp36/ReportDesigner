@@ -1,18 +1,15 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
-
-import LayoutPage from "./pages/LayoutPage";
-import ReportPage from "./pages/ReportPage";
-
-
-
-import Player from "./pages/Player";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LayoutPage from "./pages/LayoutPage"; // Assuming LayoutPage is in the same directory
+import ReportPage from "./pages/ReportPage"; // Assuming ReportPage is in the same directory
 
 function App() {
   return (
-    <>
-      <ReportPage></ReportPage>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LayoutPage />} />
+        <Route path="/report/:steamid" element={<ReportPage />} />
+      </Routes>
+    </Router>
   );
 }
 

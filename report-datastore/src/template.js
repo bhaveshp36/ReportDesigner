@@ -4,8 +4,8 @@ const router = express.Router();
 
 // Define the schema
 const TemplateSchema = new mongoose.Schema({
-  name: String,
-  objects: Array,
+  name: { type: String, required: true },
+  objects: { type: Array, required: true },
 });
 
 // Create the model

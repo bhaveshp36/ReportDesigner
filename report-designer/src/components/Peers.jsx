@@ -3,20 +3,21 @@ import React, { useEffect, useState } from "react";
 import { Card, Table } from "antd";
 import axios from "axios";
 
-const Peers = () => {
+// eslint-disable-next-line react/prop-types
+const Peers = ({ steamid }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     // Fetch data from API using axios
     axios
-      .get("https://api.opendota.com/api/players/302276496/peers")
+      .get(`https://api.opendota.com/api/players/${steamid}/peers`)
       .then((response) => {
         setData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [steamid]);
 
   const columns = [
     {
@@ -112,8 +113,6 @@ const Peers = () => {
         width: "100%",
         height: "100%",
         overflow: "auto",
-        margin: "20px",
-        padding: "20px",
       }}
     >
       <Table

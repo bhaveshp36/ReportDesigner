@@ -4,12 +4,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Spin } from "antd";
 
+import { useNavigate } from "react-router-dom";
+
 function App() {
   const [player, setPlayer] = useState(null);
-  const id = "66314119a8fb6de904cc6f35";
+
+  const navigate = useNavigate();
 
   const onPlayerClick = (steamid) => () => {
     console.log("Clicked on player", steamid);
+    navigate(`/report/${steamid}`);
   };
 
   useEffect(() => {

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Table } from "antd";
 import axios from "axios";
 
-const RecentMatches = () => {
-  const steamid = "322669462";
+// eslint-disable-next-line react/prop-types
+const RecentMatches = ({ steamid }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const RecentMatches = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [steamid]);
 
   const columns = [
     {
@@ -133,8 +133,6 @@ const RecentMatches = () => {
           width: "100%",
           height: "100%",
           overflow: "auto",
-          margin: "20px",
-          padding: "20px",
         }}
       >
         <Table

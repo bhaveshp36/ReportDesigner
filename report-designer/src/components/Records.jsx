@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Table } from "antd";
 
-const Records = () => {
+// eslint-disable-next-line react/prop-types
+const Records = ({ steamid }) => {
   const [records, setRecords] = useState([]);
   const [heroes, setHeroes] = useState({});
   const [updatedRecords, setUpdatedRecords] = useState([]);
@@ -12,7 +13,7 @@ const Records = () => {
     const fetchRecords = async () => {
       try {
         const response = await axios.get(
-          "https://api.opendota.com/api/players/252253616/matches?sort=kills&limit=20"
+          `https://api.opendota.com/api/players/${steamid}/matches?sort=kills&limit=20`
         );
         setRecords(response.data);
         console.log("Records:", response.data);
@@ -35,7 +36,7 @@ const Records = () => {
 
     fetchRecords();
     fetchHeroes();
-  }, []);
+  }, [steamid]);
 
   useEffect(() => {
     if (Object.keys(records).length > 0 && Object.keys(heroes).length > 0) {
@@ -97,8 +98,6 @@ const Records = () => {
           width: "100%",
           height: "100%",
           overflow: "auto",
-          margin: "20px",
-          padding: "20px",
         }}
       >
         <Table

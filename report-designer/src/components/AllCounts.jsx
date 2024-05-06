@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Table, Card } from "antd";
 import axios from "axios";
 
-const AllCounts = () => {
-  const steamId = "252253616";
+// eslint-disable-next-line react/prop-types
+const AllCounts = ({ steamid }) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     // Fetch data from API using axios
     axios
-      .get(`https://api.opendota.com/api/players/${steamId}/counts`)
+      .get(`https://api.opendota.com/api/players/${steamid}/counts`)
       .then((response) => {
         console.log("Data fetched:", response.data);
         setData(response.data);
@@ -18,7 +18,7 @@ const AllCounts = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [steamid]);
 
   const renderTable = (title, dataSource) => {
     const columns = [
@@ -66,7 +66,7 @@ const AllCounts = () => {
       >
         {data ? (
           Object.entries(data).map(([key, value]) => (
-            <div key={key} style={{ flex: "1 0 auto", margin: "10px" }}>
+            <div key={key} style={{ flex: "1 0 auto", margin: "5px" }}>
               {renderTable(
                 key,
                 Object.entries(value).map(([category, stats]) => ({

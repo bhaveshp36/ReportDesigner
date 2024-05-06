@@ -20,9 +20,11 @@ class Histograms extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    const { steamid } = this.props;
     axios
       .get(
-        "https://api.opendota.com/api/players/252253616/histograms/actions_per_min"
+        `https://api.opendota.com/api/players/${steamid}/histograms/actions_per_min`
       )
       .then((response) => {
         this.setState({ data: response.data });
